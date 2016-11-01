@@ -3,7 +3,6 @@ package net.farzq.ai.search.classical;
 import java.util.Queue;
 
 
-
 public interface ISearch
 {
 	/**
