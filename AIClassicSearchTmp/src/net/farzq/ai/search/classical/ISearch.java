@@ -4,7 +4,7 @@ import java.util.Queue;
 
 
 
-public interface IGraphSearch
+public interface ISearch
 {
 	/**
 	 * Begins the search on the given Problem's state space.
