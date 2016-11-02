@@ -17,5 +17,8 @@ public class EightQueensAction implements IAction
 		return columnNo;
 	}
 	
-	
+	public String toString()
+	{
+		return "" + columnNo;
+	}
 }
