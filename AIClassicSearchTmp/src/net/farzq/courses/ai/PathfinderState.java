@@ -77,34 +77,39 @@ public class PathfinderState implements IState
 	
 	public String toString()
 	{
-		String s = "";
+		String s = "+";
+		
+		for(int x = 0; x < maze.size.width; x++)
+		{
+			s += "--+";
+		}
 		
 		for(int y = 0; y < maze.size.height; y++)
 		{
+			s += "\n|";
 			for(int x = 0; x < maze.size.width; x++)
 			{
 				if(position.x == x && position.y == y)
-					s += "O";
+					s += "O ";
 				else if(getGoal().x == x && getGoal().y == y)
-					s += "X";
+					s += "X ";
 				else
-					s += ".";
+					s += ". ";
 				
 				if(maze.canMove(new Point(x, y), Direction.EAST))
-					s += "|";
-				else
 					s += " ";
+				else
+					s += "|";
 			}
-			s += "\n";
 			
+			s += "\n+";
 			for(int x = 0; x < maze.size.width; x++)
 			{
 				if(maze.canMove(new Point(x, y), Direction.SOUTH))
-					s += "__";
+					s += "  +";
 				else
-					s += "  ";
+					s += "--+";
 			}
-			s += "\n";
 		}
 		
 		return s;
@@ -131,8 +136,8 @@ public class PathfinderState implements IState
 			int wallsCount = stdin.nextInt();
 			for(int i = 0; i < wallsCount; i++)
 			{
-				Point p1 = new Point(stdin.nextInt(), stdin.nextInt());
-				Point p2 = new Point(stdin.nextInt(), stdin.nextInt());
+				Point p1 = new Point(stdin.nextInt() - 1, stdin.nextInt() - 1);
+				Point p2 = new Point(stdin.nextInt() - 1, stdin.nextInt() - 1);
 				
 				int dx = p2.x - p1.x;
 				int dy = p2.y - p1.y;
