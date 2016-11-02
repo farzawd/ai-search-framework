@@ -39,6 +39,17 @@ public class PathfinderState implements IState
 		return dirs;
 	}
 	
+	public boolean move(Direction direction)
+	{
+		if(maze.canMove(position, direction))
+		{
+			position = new Point(position.x + direction.deltaX, position.y + direction.deltaY);
+			return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public boolean equals(IState other)
 	{
