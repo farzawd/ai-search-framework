@@ -22,8 +22,18 @@ public class PathfinderState implements IState
 	
 	public PathfinderState(PathfinderState baseState)
 	{
-		this.position = new Point(position);
+		this.position = new Point(baseState.position);
 		this.maze = baseState.maze;
+	}
+	
+	public Point getPosition()
+	{
+		return this.position;
+	}
+	
+	public Point getGoal()
+	{
+		return new Point(maze.size.width - 1, maze.size.height - 1);
 	}
 	
 	public ArrayList<Direction> getAvailableDirections()
@@ -39,9 +49,14 @@ public class PathfinderState implements IState
 		return dirs;
 	}
 	
+	public boolean canMove(Direction direction)
+	{
+		return maze.canMove(position, direction);
+	}
+	
 	public boolean move(Direction direction)
 	{
-		if(maze.canMove(position, direction))
+		if(canMove(direction))
 		{
 			position = new Point(position.x + direction.deltaX, position.y + direction.deltaY);
 			return true;
@@ -53,9 +68,48 @@ public class PathfinderState implements IState
 	@Override
 	public boolean equals(IState other)
 	{
-		// TODO Auto-generated method stub
+		PathfinderState pfState = (PathfinderState)other;
+		if(position.equals(pfState.position) && maze == pfState.maze)
+			return true;
+		
 		return false;
 	}
+	
+	public String toString()
+	{
+		String s = "";
+		
+		for(int y = 0; y < maze.size.height; y++)
+		{
+			for(int x = 0; x < maze.size.width; x++)
+			{
+				if(position.x == x && position.y == y)
+					s += "O";
+				else if(getGoal().x == x && getGoal().y == y)
+					s += "X";
+				else
+					s += ".";
+				
+				if(maze.canMove(new Point(x, y), Direction.EAST))
+					s += "|";
+				else
+					s += " ";
+			}
+			s += "\n";
+			
+			for(int x = 0; x < maze.size.width; x++)
+			{
+				if(maze.canMove(new Point(x, y), Direction.SOUTH))
+					s += "__";
+				else
+					s += "  ";
+			}
+			s += "\n";
+		}
+		
+		return s;
+	}
+	
 
 	private static class Maze
 	{
