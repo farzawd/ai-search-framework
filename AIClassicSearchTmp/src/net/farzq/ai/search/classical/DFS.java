@@ -1,29 +1,37 @@
 package net.farzq.ai.search.classical;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 public class DFS extends Search
 {
-	public DFS(Problem problem)
+	private final boolean graphSearch;
+	
+	public DFS(Problem problem, boolean graphSearch)
 	{
 		super(problem);
+		this.graphSearch = graphSearch;
 	}
 	
 	@Override
 	public IState beginSearch()
 	{
-		// TODO Auto-generated method stub
 		IState currentState = problem.getInitialState();
 		Node<IState> currentNode = new Node<IState>(currentState, null);
 		
-		Stack<Node<IState>> stack = new Stack<>();
-		stack.push(currentNode);
+		Stack<Node<IState>> openList = new Stack<>();
+		Set<IState> closedSet = new HashSet<>();
 		
-		while(stack.size() > 0)
-		{
-			currentNode = stack.pop();
+		openList.push(currentNode);
+		closedSet.add(currentState);
+		
+		while(openList.size() > 0)
+		{			
+			currentNode = openList.pop();
+
 			incExpandedNodes();
 			
 			ArrayList<IAction> actions = problem.getAvailableActions(currentNode.getState());
@@ -38,7 +46,16 @@ public class DFS extends Search
 					// TODO generate path to goal
 					return resultingState;
 				}
-				stack.push(new Node<IState>(resultingState, currentNode));
+				
+				if(graphSearch)
+				{
+					if(closedSet.contains(resultingState))
+						continue;
+					else
+						closedSet.add(resultingState);
+				}
+				
+				openList.push(new Node<IState>(resultingState, currentNode));
 			}
 		}
 		

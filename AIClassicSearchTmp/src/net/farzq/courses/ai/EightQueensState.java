@@ -21,7 +21,7 @@ public class EightQueensState implements IState
 	}
 	
 	@Override
-	public boolean equals(IState other)
+	public boolean equals(Object other)
 	{
 		if(other == null)
 			return false;
@@ -41,6 +41,20 @@ public class EightQueensState implements IState
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		int sum = 0;
+		
+		for(Integer row: queensRows)
+		{
+			sum *= 10;
+			sum += row;
+		}
+		
+		return sum;
 	}
 	
 	public void addQueen(int row)

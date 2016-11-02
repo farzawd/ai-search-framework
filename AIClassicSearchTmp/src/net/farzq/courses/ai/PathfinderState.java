@@ -66,13 +66,25 @@ public class PathfinderState implements IState
 	}
 	
 	@Override
-	public boolean equals(IState other)
+	public boolean equals(Object other)
 	{
+		if(other == null)
+			return false;
+		
+		if(!(other instanceof PathfinderState))
+			return false;
+		
 		PathfinderState pfState = (PathfinderState)other;
 		if(position.equals(pfState.position) && maze == pfState.maze)
 			return true;
 		
 		return false;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return this.toString().hashCode();
 	}
 	
 	public String toString()
