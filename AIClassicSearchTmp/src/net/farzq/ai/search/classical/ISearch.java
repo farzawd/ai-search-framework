@@ -8,31 +8,31 @@ public interface ISearch
 	/**
 	 * Begins the search on the given Problem's state space.
 	 * 
-	 * @return true if it finds a goal state, false otherwise.
+	 * @return A goal State if it finds one, null otherwise.
 	 */
-	public boolean beginSearch();
+	public IState beginSearch();
 
 
 	/**
 	 * 
 	 * @return The number of Nodes visited during search.
 	 */
-	public int getVisitedNodeCount();
+	public int getVisitedNodesCount();
 
 
 	/**
 	 * 
 	 * @return The number of Nodes expanded during search.
 	 */
-	public int getExpandedNodeCount();
+	public int getExpandedNodesCount();
 
 
 	/**
 	 * 
-	 * @return A list containing Nodes on the best path to a goal Node, null if
+	 * @return A list containing States on the best path to a goal State, null if
 	 *         there is no path.
 	 */
-	public Queue<?> getBestPathToGoal();
+	public Queue<? extends IState> getBestPathToGoal();
 
 
 	/**
