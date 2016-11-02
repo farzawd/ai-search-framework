@@ -26,7 +26,7 @@ public class PathfinderProblem extends Problem
 		ArrayList<IAction> actions = new ArrayList<>();
 		for(Direction dir: dirs)
 		{
-			if(dir.deltaX > 0 || dir.deltaY > 0) // FIXME remove this if
+			if(dir.deltaX > 0 || dir.deltaY > 0)
 				actions.add(new PathfinderAction(dir));
 		}
 		
