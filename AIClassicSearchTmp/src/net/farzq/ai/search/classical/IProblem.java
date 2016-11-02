@@ -46,7 +46,7 @@ public interface IProblem
 	 * @param currentState An state in the problem's state space.
 	 * @return Value of the problems heuristic function in currentState.
 	 */
-	public int getHeuristicFunctionValue(IState currentState);
+	public double getHeuristicFunctionValue(IState currentState);
 	
 	/**
 	 * 

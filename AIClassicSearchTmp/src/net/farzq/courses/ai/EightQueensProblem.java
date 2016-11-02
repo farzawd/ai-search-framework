@@ -59,7 +59,7 @@ public class EightQueensProblem extends Problem
 	}
 
 	@Override
-	public int getHeuristicFunctionValue(IState currentState)
+	public double getHeuristicFunctionValue(IState currentState)
 	{
 		EightQueensState eqState = (EightQueensState)currentState;
 		
