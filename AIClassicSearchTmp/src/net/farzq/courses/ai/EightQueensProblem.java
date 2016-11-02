@@ -66,10 +66,11 @@ public class EightQueensProblem extends Problem
 		List<Integer> queensRows = eqState.getQueensRows();
 		
 		int queensCount = eqState.getQueensCount();
+
 		int attacksCount = 0;
 		for(int i = 0; i < queensCount; i++)
 		{
-			for(int j = i + 1; j < queensCount; i++)
+			for(int j = i + 1; j < queensCount; j++)
 			{
 				if(queensRows.get(i) == queensRows.get(j))
 					attacksCount++;
@@ -82,7 +83,7 @@ public class EightQueensProblem extends Problem
 			}
 		}
 		
-		return attacksCount;
+		return attacksCount + (8 - queensCount);
 	}
 
 	@Override

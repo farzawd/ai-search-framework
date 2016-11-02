@@ -58,4 +58,15 @@ public class EightQueensState implements IState
 		return queensRows.size();
 	}
 
+	public String toString()
+	{
+		String s = "Queens' rows: ";
+		
+		for(Integer row: queensRows)
+		{
+			s += row;
+		}
+		
+		return s;
+	}
 }
