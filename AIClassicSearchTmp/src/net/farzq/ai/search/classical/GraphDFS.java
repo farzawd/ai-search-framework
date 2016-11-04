@@ -15,13 +15,13 @@ public class GraphDFS extends TreeDFS
 	}
 
 	@Override
-	protected boolean addNode(Node<IState> node)
+	protected boolean _addNode(Node<IState> node)
 	{
 		if(closedSet.contains(node.getState()))
 			return false;
 		
 		closedSet.add(node.getState());
 		
-		return super.addNode(node);
+		return super._addNode(node);
 	}	
 }

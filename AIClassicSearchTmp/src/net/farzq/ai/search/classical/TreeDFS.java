@@ -14,7 +14,7 @@ public class TreeDFS extends QueueBasedSearch
 	}
 
 	@Override
-	protected boolean addNode(Node<IState> node)
+	protected boolean _addNode(Node<IState> node)
 	{
 		openList.add(node);
 		
@@ -22,7 +22,7 @@ public class TreeDFS extends QueueBasedSearch
 	}
 
 	@Override
-	protected Node<IState> getNode()
+	protected Node<IState> _getNode()
 	{
 		return openList.pop();
 	}
