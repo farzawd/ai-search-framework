@@ -2,7 +2,7 @@ package net.farzq.ai.search.classical;
 
 public class DepthLimitedTreeDFS extends TreeDFS
 {
-	private final int maxDepth;
+	protected int maxDepth;
 
 	public DepthLimitedTreeDFS(Problem problem, int maxDepth)
 	{
