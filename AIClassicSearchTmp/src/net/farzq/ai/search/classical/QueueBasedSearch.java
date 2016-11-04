@@ -2,7 +2,6 @@ package net.farzq.ai.search.classical;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public abstract class QueueBasedSearch extends Search
 {	
@@ -10,25 +9,6 @@ public abstract class QueueBasedSearch extends Search
 	{
 		super(problem);
 	}
-	
-	/**
-	 * 
-	 * @param node Will be stored in the for later processing
-	 * @return true if the node was successfully stored, or false if the node got rejected.
-	 */
-	protected abstract boolean _addNode(Node<IState> node);
-	
-	/**
-	 * 
-	 * @return the next node that must be expanded
-	 */
-	protected abstract Node<IState> _getNode();
-	
-	/**
-	 * 
-	 * @return true when the search should terminate.
-	 */
-	protected abstract boolean isDone();
 	
 	private boolean addNode(Node<IState> node)
 	{
@@ -49,6 +29,8 @@ public abstract class QueueBasedSearch extends Search
 	@Override
 	public IState beginSearch()
 	{
+		initialize();
+		
 		IState currentState = problem.getInitialState();
 		Node<IState> currentNode = new Node<IState>(currentState, null);
 		
@@ -88,4 +70,9 @@ public abstract class QueueBasedSearch extends Search
 		
 		return null;
 	}
+	
+	/**
+	 * prepare for search (e.g. by initializing any queue or stack)
+	 */
+	protected abstract void initialize();
 }

@@ -10,8 +10,6 @@ public class TreeBFS extends QueueBasedSearch
 	public TreeBFS(Problem problem)
 	{
 		super(problem);
-		
-		openList = new LinkedList<>();
 	}
 
 	@Override
@@ -32,6 +30,12 @@ public class TreeBFS extends QueueBasedSearch
 	protected boolean isDone()
 	{
 		return openList.size() == 0;
+	}
+
+	@Override
+	protected void initialize()
+	{
+		openList = new LinkedList<>();
 	}
 	
 }

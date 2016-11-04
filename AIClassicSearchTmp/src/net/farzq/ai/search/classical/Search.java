@@ -10,8 +10,8 @@ public abstract class Search implements ISearch
 	private int visitedNodesCount;
 	private int expandedNodesCount;
 	
-	private LinkedList<IState> pathToGoal;
-	private double costToGoal;
+	protected LinkedList<IState> pathToGoal;
+	protected double costToGoal;
 
 	
 	public Search(Problem problem)
@@ -24,6 +24,25 @@ public abstract class Search implements ISearch
 		pathToGoal = null;
 		costToGoal = Double.MAX_VALUE;
 	}
+	
+	/**
+	 * 
+	 * @param node Will be stored in the for later processing
+	 * @return true if the node was successfully stored, or false if the node got rejected.
+	 */
+	protected abstract boolean _addNode(Node<IState> node);
+	
+	/**
+	 * 
+	 * @return the next node that must be expanded
+	 */
+	protected abstract Node<IState> _getNode();
+	
+	/**
+	 * 
+	 * @return true when the search should terminate.
+	 */
+	protected abstract boolean isDone();
 	
 	@Override
 	public int getVisitedNodesCount()

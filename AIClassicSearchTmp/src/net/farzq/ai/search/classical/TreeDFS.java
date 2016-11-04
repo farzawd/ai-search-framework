@@ -9,8 +9,6 @@ public class TreeDFS extends QueueBasedSearch
 	public TreeDFS(Problem problem)
 	{
 		super(problem);
-		
-		openList = new Stack<>();
 	}
 
 	@Override
@@ -31,6 +29,12 @@ public class TreeDFS extends QueueBasedSearch
 	protected boolean isDone()
 	{
 		return openList.size() == 0;
+	}
+
+	@Override
+	protected void initialize()
+	{
+		openList = new Stack<>();
 	}
 	
 }

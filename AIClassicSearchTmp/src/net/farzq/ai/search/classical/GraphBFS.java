@@ -10,8 +10,6 @@ public class GraphBFS extends TreeBFS
 	public GraphBFS(Problem problem)
 	{
 		super(problem);
-		
-		closedSet = new HashSet<>();
 	}
 
 	@Override
@@ -23,5 +21,12 @@ public class GraphBFS extends TreeBFS
 		closedSet.add(node.getState());
 		
 		return super._addNode(node);
-	}	
+	}
+	
+	@Override
+	protected void initialize()
+	{
+		super.initialize();		
+		closedSet = new HashSet<>();
+	}
 }
