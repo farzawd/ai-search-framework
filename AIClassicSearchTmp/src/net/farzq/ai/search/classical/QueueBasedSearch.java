@@ -5,16 +5,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class QueueBasedSearch extends Search
-{
-	private LinkedList<IState> pathToGoal;
-	private double costToGoal;
-	
+{	
 	public QueueBasedSearch(Problem problem)
 	{
 		super(problem);
-		
-		pathToGoal = null;
-		costToGoal = Double.MAX_VALUE;
 	}
 	
 	/**
@@ -93,17 +87,5 @@ public abstract class QueueBasedSearch extends Search
 		}
 		
 		return null;
-	}
-	
-	@Override
-	public Queue<IState> getBestPathToGoal()
-	{
-		return (Queue<IState>)pathToGoal;
-	}
-
-	@Override
-	public double getCostToGoal()
-	{
-		return costToGoal;
 	}
 }
