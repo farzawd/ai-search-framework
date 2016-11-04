@@ -7,12 +7,14 @@ import java.util.Queue;
 public abstract class QueueBasedSearch extends Search
 {
 	private LinkedList<IState> pathToGoal;
+	private double costToGoal;
 	
 	public QueueBasedSearch(Problem problem)
 	{
 		super(problem);
 		
 		pathToGoal = null;
+		costToGoal = Double.MAX_VALUE;
 	}
 	
 	/**
@@ -68,9 +70,14 @@ public abstract class QueueBasedSearch extends Search
 			{
 				IState resultingState = problem.getResultingState(currentNode.getState(), action);
 				
+				Node<IState> newNode = new Node<IState>(resultingState, currentNode);
+				double cost = problem.getActionCost(currentNode.getState(), action);
+				newNode.addCost(cost);
+				addNode(newNode);
+				
 				if(problem.isGoal(resultingState))
 				{
-					// TODO generate path to goal
+					costToGoal = newNode.getCost();
 					pathToGoal = new LinkedList<>();
 					
 					pathToGoal.add(resultingState);
@@ -82,8 +89,6 @@ public abstract class QueueBasedSearch extends Search
 					
 					return resultingState;
 				}
-				
-				addNode(new Node<IState>(resultingState, currentNode));
 			}
 		}
 		
@@ -97,9 +102,8 @@ public abstract class QueueBasedSearch extends Search
 	}
 
 	@Override
-	public float getBestCostToGoal()
+	public double getCostToGoal()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return costToGoal;
 	}
 }

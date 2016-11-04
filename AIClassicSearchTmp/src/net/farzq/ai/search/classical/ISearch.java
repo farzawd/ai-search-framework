@@ -39,6 +39,6 @@ public interface ISearch
 	 * 
 	 * @return The cost of best path found to a goal node.
 	 */
-	public float getBestCostToGoal();
+	public double getCostToGoal();
 
 }
