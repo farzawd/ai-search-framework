@@ -1,0 +1,150 @@
+package net.farzq.ai.search.classical;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+public class AStarSearch extends Search
+{
+	private PriorityQueue<Node<IState>> frontier;
+	private HashSet<IState> explored;
+	
+	private HashMap<IState, Node<IState>> statesNodes;
+	
+	public AStarSearch(Problem problem)
+	{
+		super(problem);
+		
+		explored = new HashSet<>();
+		statesNodes = new HashMap<>();
+		frontier = new PriorityQueue<>(new Comparator<Node<IState>>()
+		{
+			@Override
+			public int compare(Node<IState> n1, Node<IState> n2)
+			{
+				double n1Value = getFValue(n1);
+				double n2Value = getFValue(n2);
+				
+				if(n1Value > n2Value)
+					return 1;
+				else if(n1Value == n2Value)
+					return 0;
+				else
+					return -1;
+			}
+			
+		});
+	}
+	
+	private boolean addNode(Node<IState> node)
+	{
+		boolean added = _addNode(node);
+		
+		if(added)
+			incVisitedNodes();
+		
+		return added;
+	}
+	
+	private Node<IState> getNode()
+	{
+		incExpandedNodes();
+		return _getNode();
+	}
+	
+	@Override
+	public IState beginSearch()
+	{
+		IState currentState = problem.getInitialState();
+		Node<IState> currentNode = new Node<IState>(currentState, null);
+		
+		addNode(currentNode);
+		
+		while(!isDone())
+		{			
+			currentNode = getNode();
+			currentState = currentNode.getState();
+			
+			if(problem.isGoal(currentState))
+			{
+				costToGoal = currentNode.getCost();
+				pathToGoal = new LinkedList<>();
+				
+				while(currentNode != null)
+				{
+					pathToGoal.addFirst(currentNode.getState());
+					currentNode = currentNode.getParent();
+				}
+				
+				return currentState;
+			}
+			 
+			ArrayList<IAction> actions = problem.getAvailableActions(currentNode.getState());
+			
+			for(IAction action : actions)
+			{
+				IState resultingState = problem.getResultingState(currentNode.getState(), action);
+				
+				Node<IState> newNode = new Node<IState>(resultingState, currentNode);
+				double cost = problem.getActionCost(currentNode.getState(), action);
+				newNode.addCost(cost);
+				addNode(newNode);
+			}
+		}
+		
+		return null;
+	}
+
+	@Override
+	protected boolean _addNode(Node<IState> node)
+	{
+		if(!explored.contains(node.getState()))
+		{
+			Node<IState> tmp = statesNodes.get(node.getState()); // does frontier already contain a node with the same state?
+			if(tmp == null)
+			{
+				statesNodes.put(node.getState(), node);
+				frontier.add(node);
+				
+				return true;
+			}
+			else
+			{
+				if(node.getCost() < tmp.getCost())
+				{
+					frontier.remove(tmp);
+					statesNodes.remove(tmp.getState());
+					
+					frontier.add(node);
+					statesNodes.put(node.getState(), node);
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	protected Node<IState> _getNode()
+	{
+		Node<IState> node = frontier.poll(); 
+		
+		explored.add(node.getState());
+		
+		return node;
+	}
+
+	@Override
+	protected boolean isDone()
+	{
+		return frontier.size() == 0;
+	}
+	
+	private double getFValue(Node<IState> n)
+	{
+		return n.getCost() + problem.getHeuristicFunctionValue(n.getState());
+	}
+}
