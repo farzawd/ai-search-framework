@@ -83,7 +83,7 @@ public class EightQueensProblem extends Problem
 			}
 		}
 		
-		return attacksCount + (8 - queensCount);
+		return (attacksCount * 8) + (8 - queensCount);
 	}
 
 	@Override
